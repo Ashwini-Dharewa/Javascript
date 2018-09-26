@@ -1,0 +1,100 @@
+<html>
+<head><title>Tax Calculation</title></head>
+
+<script type="text/javascript">
+
+		var $ = function (id) {
+    return document.getElementById(id);
+	}
+	
+         function calc()
+         {
+            var ctc = parseFloat( $("ctc").value );
+			var lic = parseFloat( $("lic").value );
+			var pf = parseFloat( $("pf").value );
+			var mf = parseFloat( $("mf").value );
+			var medi = parseFloat( $("medi").value );
+			var ec=calc80C(lic,pf,mf)
+			var ed=calc80D(medi);
+			var temp=taxableCalc(ctc,ec,ed);
+			if(temp==0)
+			document.write("No taxes applicable");
+			else
+			{
+				var tax=taxRate(temp);
+			}
+			document.write(tax);
+         }
+		 
+		 function calc80C(lic,pf,mf)
+		 {
+			if((lic+pf+mf)<150000)
+			{
+			 return (lic+pf+mf);
+			}
+			else
+			return 150000; 
+		 }
+		 
+		 function calc80D(medi)
+		 {
+			if(medi<25000)
+			return medi;
+			else
+			return 25000;
+		 }
+		 
+		 function taxableCalc(ctc,ec,ed)
+		 {
+			if(ctc<200000)
+			return 0;
+			else
+			{
+				var nctc=ctc-200000;
+				var temp=nctc-ec-ed;
+				return temp;
+				
+			}
+		 }
+		 
+		 function taxRate(temp)
+		 {
+			if(temp<=500000)
+			return temp*0.05;
+						
+			if(temp>500000 && temp<=1000000)
+			return (500000*0.05 + ((temp-500000)*0.1));	
+						
+			if(temp>1000000 && temp<=1500000)
+			{
+			var t1=temp-1000000;
+			var t2=temp-500000-t1;
+			return (500000*0.05 + t2*0.1 + t1*0.2);	
+			}
+					
+			if(temp>1500000)
+			{
+			var t1=temp-1500000;
+			return (t1*0.3 + 500000*0.2 + 500000*0.1 +500000*0.05);
+			}
+			
+			
+		 }
+		 
+		 
+		 
+      </script>	  
+	  
+	  
+
+<body>
+<h3 align="center">
+<form>
+		 Enter CTC Value:<input type="text" id="ctc" required><br>
+		 Enter LIC Value:<input type="text" id="lic" required><br>
+		 Enter MutualFunds Value:<input type="text" id="mf" required><br>
+		 Enter ProvidentFunds Value:<input type="text" id="pf" required><br>
+		 Enter Mediclaim Value:<input type="text" id="medi" required><br><br>
+         <input type="button" onclick="calc()" value="Calculate total tax">
+</form>
+</h3>

@@ -1,0 +1,66 @@
+<html>
+   <head>
+      <title>Object Creation</title>
+      
+      <script type="text/javascript">
+	   
+		 function Type1(){
+		 var obj = {
+        name : "",
+        author : "",
+        printInfo : function() {
+            document.write("Book name is : " + this.name + "<br>");
+            document.write("Book author is : " +this.author + "<br>");
+        }
+    }
+obj.name = "Harry Potter";
+obj.author = "JK Rowling";
+obj.printInfo();
+}
+
+
+
+		 
+		 function Type2()
+		{	
+         var book2 = new Book("Java","Sunita Arora");   // Create the object
+         document.write("Book name is : " + book2.name + "<br>");
+         document.write("Book author is : " + book2.author + "<br>");
+		 }
+		 
+		 function Type3(name,author){
+            with(this){
+               name=name;
+			   author=author;
+			  }
+			   document.write("Book name is : " + name + "<br>");
+				document.write("Book author is : " + author + "<br>");
+			
+			
+         }
+		 
+		 function Book(name,author)
+		 {
+			this.name=name;
+			this.author=author;
+			this.printInfo = function() {
+            document.write("Book name is : " + this.name + "<br>");
+            document.write("Book author is : " + this.author + "<br>");
+			}
+		}
+      </script>
+      
+   </head>
+   
+   <body>
+   
+      <form>
+		
+         <input type="button" onclick="Type1()" value="Creation using object literal"><br>
+		 <input type="button" onclick="Type2()" value="Creation using keyword this"><br>
+		 <input type="button" onclick="Type3('Let Us C++','Kanethkar')" value="Creation using with"><br>
+		 
+</form>
+   
+   </body>
+</html>

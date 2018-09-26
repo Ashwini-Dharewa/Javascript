@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+
+<script>
+
+var $ = function (id) {
+    return document.getElementById(id);
+    }
+    
+     
+
+function create(){	
+    var accNo=$("acno").value;
+    var accName=$("acname").value;
+    var accBal=parseFloat( $("acblnc").value);
+    var bank= new BankAcc(accNo,accBal,accName);    
+    
+    BankManager.addDetail(bank);
+    var account=BankManager.getDetails();
+    
+    document.getElementById("myTable").innerHTML="<tr><th>AccountNumber</th> <th>Account Name</th><th>Account Balance</th></tr>"
+    
+    for(i=0;i<account.length;i++)
+    {
+    var table = document.getElementById("myTable");
+    
+    document.getElementById("myTable").innerHTML+="<tr><td>"+ account[i].getAccNo()+"</td><td>"+account[i].getName()+"</td><td>"+account[i].getBal()+"</td></tr>";
+    }
+    
+    document.getElementById("bankDetails").innerHTML=account.toString();
+	}
+ 
+function BankAcc(accNo,balance,name)
+{
+    var accNo=accNo;
+    var balance=balance;
+    var name=name;
+    return{
+        getBal : function(){
+            
+            return balance;
+        },
+        getAccNo : function(){
+        
+        return accNo;
+        
+        },
+        getName : function(){
+        
+        return name;
+        
+        }
+    }
+}
+
+var BankManager = (function(){
+        var details = [];
+        return{
+        addDetail:function(detail){details.push(detail);},
+        getDetails:function(){return details;},
+        getAccNo:function(){return details.accNo;}
+        }
+     })(BankAcc);   
+    
+</script>
+
+</head>
+<body>
+
+<h1 align="center">Enter Account Details: </h1>
+
+<h4 align="center">
+<form>
+Account Number :<input type="text" id="acno" required><br><br>
+Account  Name   :<input type="text" id="acname" required><br><br>
+Account Balance:<input type="text" id="acblnc" required><br><br>
+<input type="button" onclick="create()" value="Create Account">
+</form>
+</h4>
+<table id="myTable">
+</table>
+<br>
+<p id="bankDetails"></p>
+</body>
+</html>
